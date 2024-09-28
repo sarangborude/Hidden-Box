@@ -15,6 +15,8 @@
 		279BAEB92C63AC75003DC88E /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279BAEB82C63AC75003DC88E /* ImmersiveView.swift */; };
 		279BAEBB2C63AC76003DC88E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279BAEBA2C63AC76003DC88E /* Assets.xcassets */; };
 		279BAEBE2C63AC76003DC88E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279BAEBD2C63AC76003DC88E /* Preview Assets.xcassets */; };
+		27ECBAEB2CA6ECAE0050FE87 /* HandTrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ECBAEA2CA6EC9F0050FE87 /* HandTrackingManager.swift */; };
+		27ECBAED2CA7782D0050FE87 /* PlaneTrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ECBAEC2CA7781F0050FE87 /* PlaneTrackingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		279BAEBA2C63AC76003DC88E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		279BAEBD2C63AC76003DC88E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		279BAEBF2C63AC76003DC88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27ECBAEA2CA6EC9F0050FE87 /* HandTrackingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandTrackingManager.swift; sourceTree = "<group>"; };
+		27ECBAEC2CA7781F0050FE87 /* PlaneTrackingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneTrackingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 		279BAEAB2C63AC75003DC88E /* Hidden Box */ = {
 			isa = PBXGroup;
 			children = (
+				27ECBAEC2CA7781F0050FE87 /* PlaneTrackingManager.swift */,
+				27ECBAEA2CA6EC9F0050FE87 /* HandTrackingManager.swift */,
 				279BAEB02C63AC75003DC88E /* Hidden_BoxApp.swift */,
 				279BAEB22C63AC75003DC88E /* ContentView.swift */,
 				279BAEB42C63AC75003DC88E /* AppModel.swift */,
@@ -164,6 +170,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				279BAEB72C63AC75003DC88E /* ToggleImmersiveSpaceButton.swift in Sources */,
+				27ECBAEB2CA6ECAE0050FE87 /* HandTrackingManager.swift in Sources */,
+				27ECBAED2CA7782D0050FE87 /* PlaneTrackingManager.swift in Sources */,
 				279BAEB32C63AC75003DC88E /* ContentView.swift in Sources */,
 				279BAEB92C63AC75003DC88E /* ImmersiveView.swift in Sources */,
 				279BAEB52C63AC75003DC88E /* AppModel.swift in Sources */,
