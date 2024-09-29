@@ -16,7 +16,7 @@ struct ImmersiveView: View {
     @State private var boxTopRight = Entity()
     @State private var boxTopCollision = Entity()
     //@State private var leftFingerSphere = Entity()
-    //@State private var rightFingerSphere = Entity()
+    @State private var rightFingerSphere = Entity()
     @State private var isBoxOpen = false
     
     @State private var planeTracking = PlaneTrackingManager()
@@ -24,7 +24,7 @@ struct ImmersiveView: View {
     @State private var openParticleEntity = Entity()
     
     @State private var animationCompletionSubcription: AnyCancellable?
-    //@State private var collisionSubscription: EventSubscription?
+    @State private var collisionSubscription: EventSubscription?
     //@State private var fingerCollisionSubscription: EventSubscription?
     //@State private var fingercollisionCancellable: Cancellable?
     
@@ -54,60 +54,63 @@ struct ImmersiveView: View {
                 if let boxTopLeft = immersiveContentEntity.findEntity(named: "OcclusionTop_Left"),
                    let boxTopRight = immersiveContentEntity.findEntity(named: "OcclusionTop_Right"),
                    let boxTopCollision = immersiveContentEntity.findEntity(named: "Top_Collision"),
+                   let rightSphere = immersiveContentEntity.findEntity(named: "RightSphere"),
                    let openParticleEntity = immersiveContentEntity.findEntity(named: "OpenParticleEmitter") {
                     self.boxTopLeft = boxTopLeft
                     self.boxTopRight = boxTopRight
                     self.boxTopCollision = boxTopCollision
                     self.openParticleEntity = openParticleEntity
-//                    self.leftFingerSphere = leftFingerSphere
-//                    self.rightFingerSphere = rightFingerSphere
-//                    
-//                    collisionSubscription = content.subscribe(to: CollisionEvents.Began.self, on: self.boxTopCollision, { collisionEvent in
-//                        print("something collided with the box top")
-//                        //self.playOpenBoxAnimation()
-//                        //collisionSubscription = nil
-//                    })
-                    
+                    self.rightFingerSphere = rightSphere
 
+                    
+                    
+                    // will the hand collisions work if our top collision objects parent is changed???
+                    // It doesn't work!!!!
+
+                    // If I uncomment this the boxTopCollision appears at the scene origin.
+                    // This is probably happening as the scene in loaded then then anchored to the plane anchor entity.
+                    // I need to figure out a way where the parent is updated after the anchoring is done
+                    //planeTracking.contentEntity.addChild(boxTopCollision, preservingWorldTransform: true)
+                    print("box top parent updated")
+                   
+                    
+//                    self.leftFingerSphere = leftFingerSphere
+                    self.rightFingerSphere = rightSphere
+                    
+                    collisionSubscription = content.subscribe(to: CollisionEvents.Began.self, on: self.boxTopCollision, { collisionEvent in
+                        let name = collisionEvent.entityB.name
+                        print("something collided with the box top \(name)")
+                        //self.playOpenBoxAnimation()
+                        //collisionSubscription = nil
+                    })
                 }
             }
             
-//            handTrackingManager = await HandTrackingManager()
-//            if let handTrackingManager  = handTrackingManager {
-//                content.add(handTrackingManager.leftIndexFingerTip)
-//                content.add(handTrackingManager.rightIndexFingerTip)
-//                
-//            
-//                
-//                //handTrackingManager.leftIndexFingerTip.addChild(leftFingerSphere)
-//                handTrackingManager.rightIndexFingerTip.addChild(rightFingerSphere)
-//            }
+            handTrackingManager = await HandTrackingManager()
+            if let handTrackingManager  = handTrackingManager {
+                content.add(handTrackingManager.leftIndexFingerTip)
+                content.add(handTrackingManager.rightIndexFingerTip)
+
+              //handTrackingManager.leftIndexFingerTip.addChild(leftFingerSphere)
+                handTrackingManager.rightIndexFingerTip.addChild(rightFingerSphere)
+            }
         }
         .gesture(
             DragGesture()
                 .targetedToEntity(where: .has(ToyComponent.self))
                 .onChanged({ value in
                     value.entity.position = value.convert(value.location3D, from: .local, to: value.entity.parent!)
-//                    
-//                    if var pb = value.entity.components[PhysicsBodyComponent.self] {
-//                        pb.mode = .kinematic
-//                        value.entity.components[PhysicsBodyComponent.self] = pb
-//                    }
                     value.entity.components[PhysicsBodyComponent.self] = .none
                 })
                 .onEnded({ value in
                     
-//value.entity.components.set(CollisionComponent(shapes: [.generateBox(size: [0.1, 0.1, 0.1])], isStatic: false))
                     let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
                     let pb = PhysicsBodyComponent(material: material)
                     value.entity.components.set(pb)
-                    //let originalParent = value.entity.parent!
-                    //let parent = planeTracking.addCube(tapLocation: value.entity.position(relativeTo: nil))
-                    let pos = value.entity.position(relativeTo: nil)
-                    planeTracking.contentEntity.addChild(value.entity)
-                    value.entity.setPosition(pos, relativeTo: nil)
-            
-                    
+
+                    //let pos = value.entity.position(relativeTo: nil)
+                    planeTracking.contentEntity.addChild(value.entity, preservingWorldTransform: true)
+                    //value.entity.setPosition(pos, relativeTo: nil)
                 })
         )
         .gesture(
@@ -153,13 +156,13 @@ struct ImmersiveView: View {
             boxTopLeft.removeFromParent()
             boxTopRight.removeFromParent()
             boxTopCollision.removeFromParent()
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 if var particleEmitter = openParticleEntity.components[ParticleEmitterComponent.self] {
                     particleEmitter.isEmitting = true
                     print("playing open animation")
                     openParticleEntity.components[ParticleEmitterComponent.self] = particleEmitter
                 }
-            }
+            //}
          
             self.animationCompletionSubcription = nil
         }

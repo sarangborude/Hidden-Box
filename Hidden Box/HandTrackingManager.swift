@@ -33,9 +33,17 @@ class HandTrackingManager {
         leftIndexFingerTip = await AnchorEntity(.hand(.left, location: .indexFingerTip))
         rightIndexFingerTip = await AnchorEntity(.hand(.right, location: .indexFingerTip))
         
-        
-        
-        
+//    
+//        let collision = await CollisionComponent(shapes: [.generateBox(size: .init(repeating: 0.05))], isStatic: false)
+//        await leftIndexFingerTip.components.set(collision)
+//        await rightIndexFingerTip.components.set(collision)
+//        
+//        var pb = PhysicsBodyComponent()
+//        pb.isAffectedByGravity = false
+//        pb.mode = .kinematic
+//        
+//        await leftIndexFingerTip.components.set(pb)
+//        await rightIndexFingerTip.components.set(pb)
         
     }
 }
