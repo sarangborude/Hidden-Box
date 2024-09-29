@@ -54,7 +54,7 @@ class PlaneTrackingManager {
         }
     }
     
-    func runARKitSession() async{
+    func runARKitSession() async {
         do {
             try await session.run([planeTracking])
         }
