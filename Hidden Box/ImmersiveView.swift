@@ -36,7 +36,7 @@ struct ImmersiveView: View {
             if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
                 content.add(immersiveContentEntity)
                 
-                immersiveContentEntity.position = [0, -0.25, 0]
+                immersiveContentEntity.position = [0, -0.25, 0] // offset for the table to appear inside the table
                 anchor.addChild(immersiveContentEntity)
                 
                 if let boxTopLeft = immersiveContentEntity.findEntity(named: "OcclusionTop_Left"),
@@ -106,7 +106,6 @@ struct ImmersiveView: View {
         
         // Play animation after the box opens.
         animationCompletionSubcription = boxTopLeft.scene?.publisher(for: AnimationEvents.PlaybackCompleted.self, on: boxTopLeft).sink { _ in
-
             boxTopLeft.removeFromParent()
             boxTopRight.removeFromParent()
             boxTopCollision.removeFromParent()

@@ -734,29 +734,6 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
-        }
-
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
         {
             uniform token info:id = "RealityKitContent.ToyComponent"
@@ -795,29 +772,6 @@ def Xform "Root"
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
         }
 
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
@@ -863,26 +817,6 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double staticFriction = 10
-            }
-        }
-
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
         {
             uniform token info:id = "RealityKitContent.ToyComponent"
@@ -921,29 +855,6 @@ def Xform "Root"
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
         }
 
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
@@ -986,29 +897,6 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
-        }
-
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
         {
             uniform token info:id = "RealityKitContent.ToyComponent"
@@ -1047,29 +935,6 @@ def Xform "Root"
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
         }
 
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
@@ -1111,29 +976,6 @@ def Xform "Root"
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RigidBody"
-        {
-            float angularDamping = 10
-            bool gravityEnabled = 1
-            uniform token info:id = "RealityKit.RigidBody"
-            float linearDamping = 10
-            token motionType = "Dynamic"
-
-            def RealityKitStruct "massFrame"
-            {
-                def RealityKitStruct "m_pose"
-                {
-                }
-            }
-
-            def RealityKitStruct "material"
-            {
-                double dynamicFriction = 10
-                double restitution = 0
-                double staticFriction = 10
-            }
         }
 
         def RealityKitCustomComponent "RealityKitContent_ToyComponent"
