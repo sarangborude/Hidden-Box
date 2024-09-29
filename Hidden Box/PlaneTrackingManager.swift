@@ -20,8 +20,6 @@ class PlaneTrackingManager {
     var contentEntity = Entity()
     private var planeEntities = [UUID: Entity]()
     private var planeAnchors = [UUID: PlaneAnchor]()
-
-    var errorState = false
     
     var dataProvidersAreSupported: Bool {
         PlaneDetectionProvider.isSupported
@@ -43,13 +41,12 @@ class PlaneTrackingManager {
                 print("Authorization changed to: \(status)")
                 
                 if status == .denied {
-                    errorState = true
+                    print("ARKit authorization is denied by the user")
                 }
             case .dataProviderStateChanged(dataProviders: let providers, newState: let state, error: let error):
                 print("Data provider changed: \(providers), \(state)")
                 if let error {
                     print("Data provider reached an error state: \(error)")
-                    errorState = true
                 }
             @unknown default:
                 fatalError("Unhandled new event type \(event)")
