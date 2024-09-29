@@ -16,8 +16,6 @@ import RealityKitContent
 class PlaneTrackingManager {
     let session = ARKitSession()
     let planeTracking = PlaneDetectionProvider()
-    let sceneReconstruction = SceneReconstructionProvider()
-    private var meshEntities = [UUID: ModelEntity]()
     
     var contentEntity = Entity()
     private var planeEntities = [UUID: Entity]()
@@ -26,11 +24,11 @@ class PlaneTrackingManager {
     var errorState = false
     
     var dataProvidersAreSupported: Bool {
-        PlaneDetectionProvider.isSupported && SceneReconstructionProvider.isSupported
+        PlaneDetectionProvider.isSupported
     }
     
     var isReadyToRun: Bool {
-        planeTracking.state == .initialized && sceneReconstruction.state == .initialized
+        planeTracking.state == .initialized
     }
     
     func setupContentEntity() -> Entity {
@@ -61,7 +59,7 @@ class PlaneTrackingManager {
     
     func runARKitSession() async{
         do {
-            try await session.run([planeTracking, sceneReconstruction])
+            try await session.run([planeTracking])
         }
         catch {
             print("error starting arkit session: \(error.localizedDescription)")
@@ -118,12 +116,8 @@ class PlaneTrackingManager {
             
             if let shape {
                 entity.components.set(CollisionComponent(shapes: [shape], isStatic: true))
-                // The plane needs to be a static physics body so that objects come to rest on the plane.
-                //let physicsMaterial = PhysicsMaterialResource.generate()
-                //let physics = PhysicsBodyComponent(shapes: [shape], mass: 0.0, material: physicsMaterial, mode: .static)
                 let physics = PhysicsBodyComponent(mode: .static)
                 entity.components.set(physics)
-                //entity.components.set(InputTargetComponent())
             }
             
             let existingEntity = planeEntities[anchor.id]
@@ -132,74 +126,6 @@ class PlaneTrackingManager {
             contentEntity.addChild(entity)
             existingEntity?.removeFromParent()
         }
-    }
-    
-    func processReconstructionUpdates() async {
-        for await update in sceneReconstruction.anchorUpdates {
-            let meshAnchor = update.anchor
-
-            guard let shape = try? await ShapeResource.generateStaticMesh(from: meshAnchor) else { continue }
-            switch update.event {
-            case .added:
-                let entity = ModelEntity()
-                entity.transform = Transform(matrix: meshAnchor.originFromAnchorTransform)
-                entity.collision = CollisionComponent(shapes: [shape], isStatic: true)
-                //entity.components.set(InputTargetComponent())
-                entity.physicsBody = PhysicsBodyComponent(mode: .static)
-                
-                meshEntities[meshAnchor.id] = entity
-                contentEntity.addChild(entity)
-            case .updated:
-                guard let entity = meshEntities[meshAnchor.id] else { continue }
-                entity.transform = Transform(matrix: meshAnchor.originFromAnchorTransform)
-                entity.collision?.shapes = [shape]
-            case .removed:
-                meshEntities[meshAnchor.id]?.removeFromParent()
-                meshEntities.removeValue(forKey: meshAnchor.id)
-            }
-        }
-    }
-    
-    func addCube(tapLocation: SIMD3<Float>) -> Entity {
-        print("adding object")
-        let placementLocation = tapLocation + SIMD3<Float>(0, 0.2, 0)
-        print(placementLocation)
-
-//        let entity = ModelEntity(
-//            mesh: .generateBox(size: 0.1, cornerRadius: 0.0),
-//            materials: [SimpleMaterial(color: .systemPink, isMetallic: false)],
-//            collisionShape: .generateBox(size: SIMD3<Float>(repeating: 0.1)),
-//            mass: 1.0)
-        let entity = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial(color: .red, isMetallic: false)])
-        let collision = CollisionComponent(shapes: [.generateBox(size: [0.1, 0.1, 0.1])], isStatic: false)
-
-        entity.components.set(collision)
-        
-        entity.setPosition(placementLocation, relativeTo: nil)
-        //entity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
-
-//        let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
-//        entity.components.set(
-//            PhysicsBodyComponent(
-//                shapes: entity.collision!.shapes,
-//                mass: 1.0,
-//                material: material,
-//                mode: .dynamic)
-//        )
-        entity.components.set(PhysicsBodyComponent())
-        entity.components.set(ToyComponent())
-        entity.components.set(InputTargetComponent())
-        contentEntity.addChild(entity)
-        return entity
-//        Task {
-//            if let entity = try? await Entity(named: "Ball", in: realityKitContentBundle) {
-//                
-//                
-//                entity.setPosition(placementLocation, relativeTo: nil)
-//                entity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
-//                contentEntity.addChild(entity)
-//            }
-//        }
     }
 }
 
@@ -231,10 +157,6 @@ extension GeometrySource {
         precondition(format == .float3, "This subscript operator can only be used on GeometrySource instances with format .float3")
         return buffer.contents().advanced(by: offset + (stride * Int(index))).assumingMemoryBound(to: (Float, Float, Float).self).pointee
     }
-    
- 
-    
-    
 }
 
 extension GeometryElement {
