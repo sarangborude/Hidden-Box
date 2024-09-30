@@ -19,7 +19,6 @@ class PlaneTrackingManager {
     
     var contentEntity = Entity()
     private var planeEntities = [UUID: Entity]()
-    private var planeAnchors = [UUID: PlaneAnchor]()
     
     var dataProvidersAreSupported: Bool {
         PlaneDetectionProvider.isSupported
@@ -69,20 +68,17 @@ class PlaneTrackingManager {
             let anchor = anchorUpdate.anchor
 
             if anchorUpdate.event == .removed {
-                planeAnchors.removeValue(forKey: anchor.id)
                 if let entity = planeEntities.removeValue(forKey: anchor.id) {
                     entity.removeFromParent()
                 }
                 return
             }
 
-            planeAnchors[anchor.id] = anchor
-
             let entity = Entity()
             entity.name = "Plane \(anchor.id)"
             entity.setTransformMatrix(anchor.originFromAnchorTransform, relativeTo: nil)
             
-            // Generate a mesh for the plane (for occlusion).
+            // Generate a mesh for the plane (for debugging).
             var meshResource: MeshResource? = nil
             do {
                 let contents = MeshResource.Contents(planeGeometry: anchor.geometry)
