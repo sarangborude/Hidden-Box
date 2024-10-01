@@ -8,7 +8,6 @@
 import ARKit
 import RealityKit
 import SwiftUI
-import RealityKitContent
 
 
 @Observable

@@ -518,7 +518,7 @@ def Xform "Root"
             int ui:nodegraph:node:stackingOrder = 1
             quatf xformOp:orient = (1, 0, 0, 0)
             float3 xformOp:scale = (0.51, 0.0050999997, 0.255)
-            float3 xformOp:translate = (9.895302e-9, 0.25, 0)
+            float3 xformOp:translate = (9.895302e-9, 0.27, 0)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
             def RealityKitComponent "Collider"
